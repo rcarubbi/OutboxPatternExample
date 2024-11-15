@@ -1,6 +1,4 @@
-﻿using DomainLayer.Events;
-
-namespace DomainLayer.Entities;
+﻿namespace DomainLayer.Entities;
 
 public abstract class Entity : IEquatable<Entity>
 {
@@ -54,28 +52,4 @@ public abstract class Entity : IEquatable<Entity>
     }
 
     public override int GetHashCode() => Id.GetHashCode() * 41;
-}
-
-public abstract class AggregateRoot : Entity
-{
-    protected AggregateRoot(Guid id)
-        : base(id)
-    {
-    }
-
-    protected AggregateRoot()
-    {
-    }
-
-
-    private readonly List<IDomainEvent> _domainEvents = [];
-    public IReadOnlyList<IDomainEvent> GetDomainEvents() => _domainEvents.ToList().AsReadOnly();
-
-    public void ClearDomainEvents() => _domainEvents.Clear();
-
-    protected void RaiseEvent(IDomainEvent domainEvent) =>
-        _domainEvents.Add(domainEvent);
-
-    protected void RaiseDomainEvent(IDomainEvent domainEvent) =>
-        _domainEvents.Add(domainEvent);
 }
